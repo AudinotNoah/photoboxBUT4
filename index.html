@@ -6,29 +6,40 @@
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<main id="photo">
-<h1>Photo : 105</h1>
+  <div class="container">
+    <main id="photo">
+      <h1>Photo : 105</h1>
 
-<section id="la_photo">
-   <img src="">
-    <h4>titre</h4>
-      <p>description</p>
-	  <p>type, defX x defY</p>
-	  <h4 id="la_categorie">categorie : categorie de l'image</h4>
-	  <h4>commentaires : </h4>
-	  <ul id="les_commentaires">
-		  <li>pseudo : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, vitae.</li>
-		  <li>pseudo : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, recusandae.</li>
-	  </ul>
+      <section id="la_photo">
+        <img src="">
+        <h4>titre</h4>
+        <p>description</p>
+        <p>type, defX x defY</p>
+        <h4 id="la_categorie">categorie : categorie de l'image</h4>
+        <h4>commentaires : </h4>
+        <ul id="les_commentaires">
+          <li>pseudo : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, vitae.</li>
+          <li>pseudo : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, recusandae.</li>
+        </ul>
+      </section>
 
-</section>
-</main>
+      <section id="gallery-section">
+        <button id="load-gallery">Charger la galerie</button>
+        <div class="gallery-navigation">
+          <button id="first-page">Première page</button>
+          <button id="prev-page">Page précédente</button>
+          <button id="next-page">Page suivante</button>
+          <button id="last-page">Dernière page</button>
+        </div>
+        <div id="gallery"></div>
+      </section>
+    </main>
 
-<script id="photoTemplate" type="text/x-handlebars-template">
+    <script id="photoTemplate" type="text/x-handlebars-template">
 
-  
-</script>
+    </script>
 
-<script type="module" src="js/index.js"></script>
+    <script type="module" src="js/index.js"></script>
+  </div>
 </body>
 </html>

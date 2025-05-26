@@ -1,26 +1,34 @@
+const API_PREFIX = 'https://webetu.iutnc.univ-lorraine.fr';
+
 export function displayPicture(picture) {
     const photoSection = document.getElementById('la_photo');
     const photoData = picture.photo;
     photoSection.innerHTML = `
         <h2>${photoData.titre}</h2>
-        <img src="${photoData.url.href}" alt="${photoData.titre}">
+        <img src="${API_PREFIX + photoData.url.href}" alt="${photoData.titre}">
         <p>Type: ${photoData.type}</p>
         <p>Format: ${photoData.format}, ${photoData.width}x${photoData.height}</p>
         <p>${photoData.descr}</p>
+        <h4 id="la_categorie"></h4>
+        <ul id="les_commentaires"></ul>
     `;
 }
 
 export function displayCategory(category) {
     const categorySection = document.getElementById('la_categorie');
-    categorySection.textContent = `Catégorie : ${category.name}`;
+    if (categorySection) {
+        categorySection.textContent = `Catégorie : ${category.name}`;
+    }
 }
 
 export function displayComments(comments) {
     const commentsList = document.getElementById('les_commentaires');
-    commentsList.innerHTML = comments.map(comment => `
+    console.log('Commentaires reçus :', comments);
+    // Cherche un tableau dans comments
+    let arr = Array.isArray(comments) ? comments : (comments.comments || comments.items || []);
+    commentsList.innerHTML = arr.map(comment => `
         <li>
-            <p>${comment.content}</p>
-            <small>Par: ${comment.author}</small>
+            (${comment.pseudo}) ${comment.content}
         </li>
     `).join('');
 } 
