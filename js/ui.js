@@ -1,11 +1,11 @@
-const API_PREFIX = 'https://webetu.iutnc.univ-lorraine.fr';
+import { API_URL } from './config.js';
 
 export function displayPicture(picture) {
     const photoSection = document.getElementById('la_photo');
     const photoData = picture.photo;
     photoSection.innerHTML = `
         <h2>${photoData.titre}</h2>
-        <img src="${API_PREFIX + photoData.url.href}" alt="${photoData.titre}">
+        <img src="${API_URL + photoData.url.href}" alt="${photoData.titre}">
         <p>Type: ${photoData.type}</p>
         <p>Format: ${photoData.format}, ${photoData.width}x${photoData.height}</p>
         <p>${photoData.descr}</p>
@@ -17,7 +17,7 @@ export function displayPicture(picture) {
 export function displayCategory(category) {
     const categorySection = document.getElementById('la_categorie');
     if (categorySection) {
-        categorySection.textContent = `Catégorie : ${category.name}`;
+        categorySection.textContent = `Catégorie : ${category.categorie.nom}`;
     }
 }
 

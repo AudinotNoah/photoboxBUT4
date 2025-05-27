@@ -1,6 +1,4 @@
-import { API_BASE_URL } from './config.js';
-
-const API_PREFIX = 'https://webetu.iutnc.univ-lorraine.fr';
+import { API_BASE_URL, API_URL } from './config.js';
 
 export async function loadPicture(idPicture) {
     try {
@@ -19,7 +17,7 @@ export async function loadPicture(idPicture) {
 
 export async function loadResource(uri) {
     // Préfixe si l'uri commence par '/'
-    const url = uri.startsWith('/') ? API_PREFIX + uri : uri;
+    const url = uri.startsWith('/') ? API_URL + uri : uri;
     try {
         const response = await fetch(url, {
             credentials: 'include'
