@@ -23,8 +23,18 @@ export class Lightbox {
                         <h2></h2>
                         <p class="description"></p>
                         <p class="metadata"></p>
-                        <p class="category"></p>
+                        <div class="category"></div>
                         <div class="comments">
+                            <h4 style="margin:0.5em 0 0.2em 0; color:#4CAF50; font-size:1em;">Ajouter un commentaire</h4>
+                            <form class="add-comment-form" style="margin-bottom: 1em; max-width: 100%;">
+                                <div class="form-row">
+                                    <input type="text" name="pseudo" placeholder="Votre pseudo" required style="width: 32%; font-size: 0.9em; margin-right: 2%;">
+                                    <input type="text" name="titre" placeholder="Titre" required style="width: 32%; font-size: 0.9em; margin-right: 2%;">
+                                    <button type="submit" style="width: 30%; font-size: 0.9em; padding: 0.3em 0.5em;">Envoyer</button>
+                                </div>
+                                <textarea name="content" placeholder="Votre commentaire" required style="width: 100%; font-size: 0.9em; margin-top: 0.3em;"></textarea>
+                                <div class="comment-message" style="color:#4CAF50;margin-top:0.5em;"></div>
+                            </form>
                             <h3>Commentaires :</h3>
                             <ul></ul>
                         </div>
@@ -48,7 +58,6 @@ export class Lightbox {
         // Add keyboard navigation
         document.addEventListener('keydown', (e) => {
             if (!document.querySelector('.lightbox')) return;
-            
             switch(e.key) {
                 case 'Escape':
                     this.close();
@@ -59,6 +68,47 @@ export class Lightbox {
                 case 'ArrowRight':
                     this.showNext();
                     break;
+            }
+        });
+
+        lightbox.addEventListener('submit', async (e) => {
+            if (e.target.classList.contains('add-comment-form')) {
+                e.preventDefault();
+                const form = e.target;
+                const pseudo = form.pseudo.value.trim();
+                const titre = form.titre.value.trim();
+                const content = form.content.value.trim();
+                const messageDiv = form.querySelector('.comment-message');
+                messageDiv.textContent = '';
+                if (!pseudo || !titre || !content) {
+                    messageDiv.textContent = 'Tous les champs sont obligatoires.';
+                    messageDiv.style.color = 'red';
+                    return;
+                }
+                try {
+                    const photoId = this.currentPhotoId;
+                    const response = await fetch(`${API_PHOTOS_URL}/${photoId}/comments`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf8'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({ pseudo, titre, content })
+                    });
+                    if (response.status === 201) {
+                        messageDiv.textContent = 'Commentaire ajouté !';
+                        messageDiv.style.color = '#4CAF50';
+                        form.reset();
+                        await this.updateContent();
+                    } else {
+                        const err = await response.json();
+                        messageDiv.textContent = err.message || 'Erreur lors de l\'ajout du commentaire.';
+                        messageDiv.style.color = 'red';
+                    }
+                } catch (error) {
+                    messageDiv.textContent = 'Erreur lors de l\'ajout du commentaire.';
+                    messageDiv.style.color = 'red';
+                }
             }
         });
 
@@ -75,11 +125,9 @@ export class Lightbox {
             const photo = p.photo || p;
             return photo.id === photoId;
         });
-        
         if (!document.querySelector('.lightbox')) {
             document.body.appendChild(this.element);
         }
-
         this.updateContent();
         document.body.style.overflow = 'hidden';
     }
@@ -121,13 +169,11 @@ export class Lightbox {
             const photoDetails = await loadResource(`${API_PHOTOS_URL}/${photo.id}`);
             const fullPhoto = photoDetails.photo;
             const links = photoDetails.links;
-          
             img.src = API_URL + '/' + fullPhoto.url.href;
             img.alt = fullPhoto.titre;
             title.textContent = fullPhoto.titre;
             description.textContent = fullPhoto.descr || '';
             metadata.textContent = `${fullPhoto.format || 'Image'}, ${fullPhoto.width || ''}x${fullPhoto.height || ''}`;
-          
             try {
                 const categoryData = await loadResource(links.categorie.href);
                 category.textContent = `Catégorie : ${categoryData.categorie.nom}`;
@@ -135,10 +181,9 @@ export class Lightbox {
                 category.textContent = 'Catégorie non disponible';
                 console.error('Erreur lors du chargement de la catégorie :', error);
             }
-          
             try {
                 const commentsData = await loadResource(links.comments.href);
-                const comments = commentsData.comments || [];
+                const comments = (commentsData.comments || []).slice().reverse();
                 commentsList.innerHTML = comments.length > 0 
                     ? comments.map(comment => `
                         <li>
@@ -157,8 +202,6 @@ export class Lightbox {
             category.textContent = '';
             commentsList.innerHTML = '';
         }
-        
-
         this.element.querySelector('.lightbox-prev').disabled = this.currentIndex === 0;
         this.element.querySelector('.lightbox-next').disabled = this.currentIndex === this.photos.length - 1;
     }

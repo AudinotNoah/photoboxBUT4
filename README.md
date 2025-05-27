@@ -9,6 +9,10 @@ Ce projet est une galerie photo web réalisée en JavaScript (TD6 - Programmatio
 - Affichage d'une photo en grand format (lightbox)
 - Affichage des détails d'une photo : titre, description, format, dimensions
 - Affichage de la catégorie et des commentaires associés à chaque photo
+- **Ajout de commentaire sur une photo** :
+  - Formulaire intégré dans la lightbox
+  - Envoi du commentaire à l'API (POST)
+  - Rafraîchissement automatique de la liste des commentaires après ajout
 
 ## Lancement du projet
 
@@ -16,7 +20,7 @@ Ce projet est une galerie photo web réalisée en JavaScript (TD6 - Programmatio
 2. Ouvrir un terminal dans le dossier du projet.
 3. Lancer un serveur local (exemple avec http-server) :
    ```
-   npx http-server . -p 8080
+   npx http-server . -p 8080 --cors
    ```
 4. Ouvrir votre navigateur à l'adresse : [http://localhost:8080](http://localhost:8080)
 
@@ -34,3 +38,4 @@ Aucune dépendance externe, tout est en JS natif (ES modules).
 
 - L'accès à l'API nécessite d'être sur le réseau de l'IUT ou d'utiliser le VPN.
 - Le code est organisé en modules pour la clarté et la réutilisabilité.
+- Pour ajouter un commentaire, il faut être authentifié sur l'API (voir documentation ou VPN étudiant si besoin).
