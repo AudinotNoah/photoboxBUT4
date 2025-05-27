@@ -1,0 +1,12 @@
+https://github.com/AudinotNoah/photoboxBUT4
+Fonctionnalités principales
+
+- Affichage d'une galerie de photos (vignettes)
+- Navigation entre les pages de la galerie (première, précédente, suivante, dernière)
+- Affichage d'une photo en grand format (lightbox)
+- Affichage des détails d'une photo : titre, description, format, dimensions
+- Affichage de la catégorie et des commentaires associés à chaque photo
+- Ajout de commentaire sur une photo (fonctionne que si connecter au vpn) **:**
+  - Formulaire intégré dans la lightbox
+  - Envoi du commentaire à l'API (POST)
+  - Rafraîchissement automatique de la liste des commentaires après ajout

@@ -9,7 +9,7 @@ Ce projet est une galerie photo web réalisée en JavaScript (TD6 - Programmatio
 - Affichage d'une photo en grand format (lightbox)
 - Affichage des détails d'une photo : titre, description, format, dimensions
 - Affichage de la catégorie et des commentaires associés à chaque photo
-- **Ajout de commentaire sur une photo** :
+- Ajout de commentaire sur une photo (fonctionne que si connecter au vpn) **:**
   - Formulaire intégré dans la lightbox
   - Envoi du commentaire à l'API (POST)
   - Rafraîchissement automatique de la liste des commentaires après ajout
